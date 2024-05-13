@@ -1,0 +1,453 @@
+%!PS
+
+%/drzewko
+/licznik 8 def
+/motyw {
+    0 0 moveto
+    0 200 rlineto
+    currentpoint translate
+    stroke
+} def
+
+/gwiazdy {
+    gsave
+    0.1 0.1 scale
+    0 0 moveto
+    /licz 5 def
+    % Rysujemy linie gwiazdy
+    36 rotate
+    0 50 rlineto 
+    5 {
+        -36 rotate
+        0 50 rlineto
+        108 rotate
+        0 50 rlineto
+    } repeat
+    1 1 0.5 setrgbcolor
+    fill
+    stroke
+    grestore
+} def
+
+/platek6{
+    gsave
+    1.2 1.2 scale
+    gsave
+    newpath
+    0.95 0.75 0.9 setrgbcolor
+    30 30 moveto
+    30 30 50 100 45 150 curveto
+    45 150 55 200 70 170 curveto
+    70 170 85 200 100 150 curveto
+    100 150 99 70 30 30 curveto
+    70 170 moveto
+    70 170 80 70 30 30 curveto
+    fill
+    stroke
+    grestore
+    0 0 0 setrgbcolor
+    30 30 moveto
+    30 30 50 100 45 150 curveto
+    45 150 55 200 70 170 curveto
+    70 170 85 200 100 150 curveto
+    100 150 99 70 30 30 curveto
+    70 170 moveto
+    70 170 80 70 30 30 curveto
+    stroke
+    
+    grestore
+
+} def
+
+/fraktal {
+    /licznik licznik 1 sub def
+    gsave
+    0.7 0.7 scale
+    motyw
+    licznik 0 gt {
+        30 rotate 
+        fraktal
+        -60 rotate
+        fraktal
+    } if
+    licznik 0 eq {
+        0 0 30 0 360 arc
+        fill
+        stroke
+    } if
+    grestore
+    /licznik licznik 1 add def
+} def
+
+
+/platek4 {
+    gsave
+    newpath
+    0 0 moveto
+    0 0 50 -45 100 -50 curveto
+    100 -50 125 -25 150 0 curveto
+    150 0 125 25 100 50 curveto
+    100 50 50 45 0 0 curveto
+    eofill
+    0 0 0 setrgbcolor
+    newpath
+    0 0 moveto
+    0 0 50 -45 100 -50 curveto
+    100 -50 125 -25 150 0 curveto
+    150 0 125 25 100 50 curveto
+    100 50 50 45 0 0 curveto
+    stroke
+    grestore
+} def
+
+/kwiat4 {
+    /b exch def
+    /g exch def
+    /r exch def
+    /sc exch def
+    /x exch def
+    /c 360 x div def
+    /k 1 def
+    /k k x div def
+    sc sc scale
+    x {   
+        newpath 
+        r g b setrgbcolor          
+        /r r k add def
+        c rotate
+        platek4      
+        stroke 
+    } repeat
+    0.9 0.9 0.6 setrgbcolor
+    0 0 20 0 360 arc
+    fill
+    stroke
+} def
+
+/lisc1 {
+    /tablica2 [ 15 20 30 35 40 45 50 55] def
+    /tablica1 [ 55 50 45 40 35 30 25 20] def
+    /p 0 def
+    /z -10 def
+    %0 0 moveto
+    /r 50 def
+    /k4 0 def
+    /k5 0.4 def
+    /k6 0 def
+    0 1 7 {
+        0 0 0 setrgbcolor
+        /z tablica1 p get def
+        0 0 moveto
+        r r rlineto
+        0 0 moveto
+        0 z rlineto
+        /v r 2 div def
+        /f v 30 add def
+        /g f -1 mul def
+        0 0 moveto
+        0 0 f v r r curveto
+        0 0 moveto
+        0 0 g v r r curveto
+        0 z translate
+        gsave
+        k4 k5 k6 setrgbcolor
+        /k4 k4 0.05 add def
+        /k5 k5 0.07 add def
+        /k6 k6 0.06 add def
+        eofill
+        grestore
+        /r r 5 sub def
+        /p p 1 add def
+        r rotate
+        stroke 
+    } for 
+} def
+
+/licznik 4 def
+/fraktal2 {  
+    /k1 exch def
+    /k2 exch def
+    k1 rotate
+    /licznik licznik 1 sub def
+    gsave
+    0.7 0.7 scale
+    lisc1
+    licznik 0 gt {
+        k1 rotate 
+        k1 k2 fraktal2
+        k2 rotate
+        k1 k2 fraktal2
+    } if
+    grestore
+    /licznik licznik 1 add def
+} def
+
+%tło
+
+gsave
+0 0 translate
+0 0 moveto
+600 0 lineto
+600 1200 lineto
+0 1200 lineto
+closepath
+0.65 0.85 0.73 setrgbcolor
+fill
+stroke
+grestore
+
+%rysuje gwiazdy
+
+gsave
+50 800 translate
+12 {
+    /licz 20 def
+    gsave
+    20{
+        gwiazdy
+        50 0 translate
+    } repeat
+    grestore
+
+    licz 2 mod 0 eq{
+        25 -100 translate
+    } if
+    licz 2 mod 1 eq{
+        -25 -100 translate
+    } if
+    /licz licz 1 sub def
+} repeat
+grestore
+
+
+% liście
+
+250 100 translate
+/tablica3 [15 40 -50 -50 250 -60 200 -90 90 -100] def
+/tablica4 [15 40 -50 -15 225 -100 -100 -30 -70 -90] def
+/t 0 def
+
+/x 290 def
+/y 310 def
+0 50 translate
+0 0 moveto
+gsave
+0 1 9 {
+    /x tablica3 t get def
+    /y tablica4 t get def
+    x y translate
+    0 0 moveto
+    170 x fraktal2
+    /t t 1 add def
+} for
+grestore
+
+
+gsave
+300 200 translate
+190 rotate
+/t 0 def
+0 1 9 {
+    /x tablica3 t get def
+    /y tablica4 t get def
+    x y translate
+    0 0 moveto
+    y 170 fraktal2
+    /t t 1 add def
+} for
+grestore
+
+% napis
+
+/bb 0.1 def
+gsave
+-300 0 translate
+/Courier-BoldOblique  findfont
+100 scalefont
+setfont
+100 500 moveto
+0 0 0.5 setrgbcolor
+(Happy ) show
+    gsave
+    105 400 moveto
+    (birthday) true charpath clip
+        gsave
+        /bb 0.3 def
+            0 0 translate
+            120{
+                    0 0 moveto
+                    5 0 lineto
+                    5 1200 lineto
+                    0 1200 lineto
+                    closepath
+                    bb 0.5 1 sethsbcolor
+                    fill
+                    stroke
+                5 0 translate
+                /bb bb 0.005 add def
+            } repeat
+        grestore
+    stroke
+    grestore
+    90 320 moveto
+    (to you!) true charpath clip
+        gsave
+        -200 -900 translate
+        0 0 moveto
+        600 0 lineto
+        600 1200 lineto
+        0 1200 lineto
+        closepath
+        0.95 0.5 0.8 setrgbcolor
+        fill
+        0 0 moveto
+        stroke
+        grestore
+stroke
+grestore
+
+%fraktal
+
+gsave
+0.98 1 1 setrgbcolor
+100 -100 translate
+0.5 0.5 scale
+/pp 0 def
+0 0 moveto
+300 600 translate
+0 0 moveto
+180 rotate
+10{
+    pp rotate
+    /pp pp 55 add def
+    fraktal
+} repeat
+grestore
+
+0 0 moveto
+100 100 translate
+
+gsave
+0.95 1 1 setrgbcolor
+100 -100 translate
+0.5 0.5 scale
+67 rotate
+fraktal
+/pp 0 def
+0 0 moveto
+0 300 translate
+10{
+    40 40 translate
+    pp rotate
+    /pp pp 25 add def
+    fraktal
+} repeat
+grestore
+
+gsave
+/cc 0 def
+10{
+    cc rotate
+    /cc cc 80 add def
+    75 100 fraktal2
+} repeat
+grestore
+
+
+/tab5 [ 50 300 -100 250 500 -650 -500 -400 -90] def
+/tab6 [ 300 -100 -380 200 -540 -240 -90 -300 -140] def
+/t 0 def
+gsave
+0 150 translate
+0.15 0.15 scale
+0 1 8 {
+    /x tab5 t get def
+    /y tab6 t get def
+    x y translate
+    gsave
+    y rotate
+    7 1 0.6 0.2 0.7 kwiat4
+    grestore
+    0 0 moveto
+    /t t 1 add def
+} for
+grestore
+
+
+
+/t 0 def
+/x 40 def
+/y 30 def
+gsave
+0 -100 translate
+0.15 0.15 scale
+0 1 8 {
+    -300 300 translate
+    /x x 40 add def
+    /y y 20 sub def
+    /y y 100 sub def
+    y x translate
+    x 2 mod 1 eq{
+        y rotate
+    } if
+    10 rotate
+    gsave
+    -50 rotate
+    7 1 0.4 0.4 0.8 kwiat4
+    grestore
+    0 0 moveto
+    /t t 1 add def
+} for
+grestore
+
+%płatki
+
+/t 0 def
+/x 40 def
+/y 30 def
+gsave
+0 100 translate
+0.15 0.15 scale
+0 1 8 {
+    -300 300 translate
+    /x x 40 add def
+    /y y 20 sub def
+    /y y 100 sub def
+    y x translate
+    x 2 mod 0 eq{
+        y rotate
+    } if
+    10 rotate
+    gsave
+    -10 rotate
+    platek6
+    grestore
+    0 0 moveto
+    /t t 1 add def
+} for
+grestore
+
+gsave
+100 600 translate
+0.15 0.15 scale
+0 1 8 {
+    -300 300 translate
+    /x x 40 add def
+    /y y 20 sub def
+    /y y 100 sub def
+    y x translate
+    y 2 mod 0 eq{
+        90 rotate
+    } if
+    10 rotate
+    gsave
+    -10 rotate
+    platek6
+    grestore
+    0 0 moveto
+    /t t 1 add def
+} for
+grestore
+
+
+showpage
